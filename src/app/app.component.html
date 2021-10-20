@@ -1,0 +1,73 @@
+<section class="get-in-touch">
+  <h1 class="title">Port Search</h1>
+  <form class="port-form row" (ngSubmit)="onSubmit()">
+    <div class="form-field col-lg-6">
+      <input
+        id="origin"
+        class="input-text js-input"
+        type="text"
+        placeholder="Origin"
+        (keyup)="credentialsSearchFilter($event, 'origin')"
+        (blur)="hideList('origin')"
+        name="origin"
+        [(ngModel)]="srcModel"
+        (click)="toggle($event, 'origin')"
+        required
+      />
+      <ul *ngIf="srcRecords.length > 0" class="suggestion-list mt-2">
+        <li
+          *ngFor="let record of srcRecords"
+          (mousedown)="getNameValue(record, 'origin')"
+        >
+          {{ record.name }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-field col-lg-6">
+      <input
+        id="dest"
+        class="input-text js-input"
+        type="text"
+        placeholder="Destination"
+        (keyup)="credentialsSearchFilter($event, 'dest')"
+        name="dest"
+        (blur)="hideList('dest')"
+        [(ngModel)]="destModel"
+        (click)="toggle($event, 'dest')"
+        required
+      />
+      <ul *ngIf="destRecords.length > 0" class="suggestion-list mt-2">
+        <li
+          *ngFor="let record of destRecords"
+          (mousedown)="getNameValue(record, 'dest')"
+        >
+          {{ record.name }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-field col-lg-12">
+      <input
+        class="submit-btn"
+        type="submit"
+        value="Submit"
+        [disabled]="!(destModel && srcModel)"
+      />
+    </div>
+  </form>
+  <div *ngIf="dataReceived">
+    <ngx-charts-line-chart
+      [view]="view"
+      [results]="single"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [autoScale]="autoScale"
+    >
+    </ngx-charts-line-chart>
+  </div>
+</section>
